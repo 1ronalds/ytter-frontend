@@ -1,0 +1,26 @@
+.main {
+    background-color: white;
+    margin: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    width: 50%;
+    height: 100%;
+
+}
+
+.top-menu-box {
+  display: flex;
+  justify-content: center;
+}
+
+.top-menu {
+    text-decoration: none;
+    color: black;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.selected {
+    font-weight: bold;
+}
