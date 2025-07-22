@@ -1,5 +1,9 @@
 import {Link} from 'react-router-dom'
 import './Main.css'
+import FollowingFeed from './FollowingFeed.jsx'
+import NewFeed from './NewFeed.jsx'
+import TopFeed from './TopFeed.jsx'
+import ReyeetFeed from './ReyeetFeed.jsx'
 
 function Main({userType, view}){
 
@@ -23,8 +27,12 @@ function Main({userType, view}){
                </>))
         }
         </div>
-        
-        
+        <div>
+        {(view === "following-feed") && <FollowingFeed />}
+        {(view === "reyeet-feed") && <ReyeetFeed />}
+        {(view === "top-feed") && <TopFeed />}
+        {(view === "new-feed") && <NewFeed />}
+        </div>
         </div>
     )
 }
