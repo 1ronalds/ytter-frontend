@@ -1,0 +1,68 @@
+.box {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    border: 1px solid black;
+    z-index: 2;
+  }
+
+.close-btn {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    border: 0px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 20px;
+  }
+
+
+.userspace {
+  position: absolute;
+  top: -5px;
+  left: 40px;
+}
+
+textarea {
+  position: absolute;
+  top: 50px;
+  left: 40px;
+  width: 420px;
+  height: 390px;
+  text-align: left;
+  padding-top: 10px;
+  padding-left: 10px;
+  resize: none;
+  font-size: 20px;
+}
+
+.charlen {
+  font-size: 18px;
+  position: absolute;
+  bottom: -10px;
+  left: 40px;
+}
+
+textarea:focus {
+  outline: none; /* optional: remove glow */
+  border: 2px solid lightblue;
+}
+
+.postbtn {
+  position: absolute;
+  right: 25px;
+  bottom: 9px;
+  border: none;
+  background-color: white;
+  font-size: 18px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.postbtn:hover {
+  font-weight: bold;
+}

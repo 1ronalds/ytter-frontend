@@ -1,0 +1,42 @@
+ul {
+    justify-content: center;
+    display: flex;
+    list-style: none;
+
+  }
+
+.submenu-container ul {
+  margin: 5px 0px;
+}
+  
+ul li {
+    cursor: pointer;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+  
+.active {
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.submenu-container {
+  background-color: var(--submenu-box-color);
+  width:50%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 15px;
+}
+
+a {
+  color: var(--main-link-color);
+}
+
+.submenu {
+  color: black;
+}

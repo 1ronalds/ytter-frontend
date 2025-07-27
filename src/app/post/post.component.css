@@ -1,0 +1,130 @@
+:host {
+    display: block;
+    width: 1100px;
+    background-color: lightblue;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.username {
+    padding-top: 10px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+}
+
+.topdiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  position: relative;
+}
+
+.menu-container {
+  position: relative;
+}
+
+.selector {
+  cursor: pointer;
+  padding-right: 10px;
+  z-index: 2;
+  position: relative;
+}
+
+p {
+    margin-top: 5px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid black;
+  width: 150px;
+  z-index: 5;
+}
+
+
+.dropdown:hover{
+    background-color: gainsboro;
+    cursor: pointer;
+}
+
+
+.bottomdiv {
+    padding-bottom:10px;
+    padding-left: 10px;
+    display: flex;
+    align-items: left;
+}
+
+.time {
+    margin-top: 30px;
+    margin-left: auto;
+}
+
+.likeimg {
+    margin-top: 33px;
+    font-size: 20px;
+}
+
+.likecount {
+    margin-top: 33px;
+    margin-left: 5px;
+    font-size: 20px;
+}
+
+.reyeetimg {
+    margin-top: 21px;
+    margin-left: 10px;
+}
+
+.reyeettext {
+    margin-top: 33px;
+    font-size: 20px;
+}
+
+.commentimg {
+    margin-top: 22px;
+}
+
+.commenttext {
+    margin-top: 33px;
+    font-size: 20px;
+}
+
+.reportbox {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 300px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid black;
+    z-index: 2;
+  }
+
+  .reportquestion {
+    position: absolute;
+    top: 20px;
+  }
+
+  .reportyesbtn {
+    position: absolute;
+    top: 70px;
+    left: 50px;
+    width: 90px;
+  }
+
+  .reportnobtn {
+    position: absolute;
+    top: 70px;
+    right: 50px;
+    width: 90px;
+  }

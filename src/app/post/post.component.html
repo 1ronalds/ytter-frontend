@@ -1,0 +1,32 @@
+<div class="topdiv">
+  <h3 class="username">{{name + " (@" + username + ")"}}</h3>
+
+  <div class="menu-container">
+    <h3 class="selector" (click)="toggleMenu()">▽</h3>
+    @if(openMenu){
+      <div class="dropdown">
+        <p (click)="toggleReport()">Report post</p>
+      </div>
+    }
+  </div>
+</div>
+
+<p>{{text}}</p>
+
+<div class="bottomdiv">
+    <img class="likeimg" src="assets/images/like.png" width="30px" height="35px">
+    <span class="likecount">{{likes}}</span>
+    <img class="reyeetimg" src="assets/images/reyeet.png" width="40px">
+    <span class="reyeettext">{{reyeets}}</span>
+    <img class="commentimg" src="assets/images/comment.png" width="50px">
+    <span class="commenttext">{{replies}}</span>
+    <span class="time">{{time}}</span>
+</div>
+
+@if(report){
+<div class="reportbox">
+<p class="reportquestion">Do you want to report this post?</p>
+<button class="reportyesbtn" (click)="reportpost()">Yes</button>
+<button class="reportnobtn" (click)="toggleReport()">No</button>
+</div>
+}

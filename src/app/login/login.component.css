@@ -1,0 +1,40 @@
+  .loginbox {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 350px;
+    height: 200px;
+    background-color: white;
+    border: 1px solid black;
+    z-index: 2;
+  }
+
+
+  .close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: 0px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 20px;
+  }
+
+  .email {
+    position: absolute;
+    top: 50px;
+    left: 38px;
+  }
+
+  .password {
+    position: absolute;
+    top: 100px;
+    left: 10px;
+  }
+
+  .submit {
+    position: absolute;
+    top: 150px;
+    left: 150px;
+  }
