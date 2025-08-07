@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { GlobalService } from '../global.service';
 import { LoginComponent } from '../login/login.component';
 
@@ -10,10 +10,20 @@ import { LoginComponent } from '../login/login.component';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  count:string = '0';
-  @Input() makeHomeBold!:boolean;
   globals = inject(GlobalService);
   displayLogin:boolean = false;
+  router = inject(Router);
+  count:number = 0;
+
+  get isHome(): boolean {
+    if(this.router.url === '/top' || this.router.url === '/reyeets' ||
+       this.router.url === '/top/this-month' || this.router.url === '/top/all-time' ||
+       this.router.url === '/new' || this.router.url === '/'){
+        return true;
+      } else {
+        return false;
+      }
+  }
 
   toggleDarkMode() {
     this.globals.darkMode.update(state => !state);

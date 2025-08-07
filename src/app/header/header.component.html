@@ -1,46 +1,56 @@
-@switch (fullViewType) {
-    @case ("normal") {
+@if(globals.loggedIn()){
+    @switch (headerType) {
+        @case ("default") {
+            <ul>
+                <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Following-posts</a></li>
+                <li><a routerLink="/reyeets" routerLinkActive="active">Following reyeets</a></li>
+                <li><a routerLink="/top" routerLinkActive="active">Top</a></li>
+                <li><a routerLink="/new" routerLinkActive="active">New</a></li>
+            </ul>
+        }
+        @case("profile") {
+            <ul>
+                <li><a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">My posts</a></li>
+                <li><a routerLink="/profile/ry" routerLinkActive="active">Following reyeets</a></li>
+                <li><a routerLink="/profile/following" routerLinkActive="active">Top</a></li>
+                <li><a routerLink="/profile/followers" routerLinkActive="active">New</a></li>
+            </ul>
+        }
+        @case("top") {
+            <ul>
+                <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Following-posts</a></li>
+                <li><a routerLink="/reyeets" routerLinkActive="active">Following reyeets</a></li>
+                <li><a routerLink="/top" routerLinkActive="active">Top</a></li>
+                <li><a routerLink="/new" routerLinkActive="active">New</a></li>
+            </ul>
+            
+            <div class="submenu-container">
+            <ul>
+                <li><a class="submenu"routerLink="/top" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">This week</a></li>
+                <li><a class="submenu" routerLink="/top/this-month" routerLinkActive="active">This month</a></li>
+                <li><a class="submenu" routerLink="/top/all-time" routerLinkActive="active">All time</a></li>
+            </ul>
+            </div>
+        }
+    }
+}
+@else {
+    @if(loggedOutTopOrNew=="top"){
         <ul>
-            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Following-posts</a></li>
-            <li><a routerLink="/reyeets" routerLinkActive="active">Following reyeets</a></li>
-            <li><a routerLink="/top" routerLinkActive="active">Top</a></li>
+            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [style.font-weight]="isTop ? 'bold' : 'normal'">Top</a></li>
             <li><a routerLink="/new" routerLinkActive="active">New</a></li>
         </ul>
+        <div class="submenu-container">
+            <ul>
+                <li><a class="submenu"routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">This week</a></li>
+                <li><a class="submenu" routerLink="/top/this-month" routerLinkActive="active">This month</a></li>
+            </ul>
+        </div>
     }
-    @case ("normal-logout") {
+    @else {
         <ul>
             <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Top</a></li>
             <li><a routerLink="/new" routerLinkActive="active">New</a></li>
         </ul>
-
-        
-
-        
     }
-    @case("profile") {
-        <ul>
-            <li><a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">My posts</a></li>
-            <li><a routerLink="/profile/ry" routerLinkActive="active">Following reyeets</a></li>
-            <li><a routerLink="/profile/following" routerLinkActive="active">Top</a></li>
-            <li><a routerLink="/profile/followers" routerLinkActive="active">New</a></li>
-        </ul>
-    }
-    @case("top") {
-        <ul>
-            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Following-posts</a></li>
-            <li><a routerLink="/reyeets" routerLinkActive="active">Following reyeets</a></li>
-            <li><a routerLink="/top" routerLinkActive="active">Top</a></li>
-            <li><a routerLink="/new" routerLinkActive="active">New</a></li>
-        </ul>
-        
-        <div class="submenu-container">
-        <ul>
-            <li><a class="submenu"routerLink="/top" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">This week</a></li>
-            <li><a class="submenu" routerLink="/top/this-month" routerLinkActive="active">This month</a></li>
-            <li><a class="submenu" routerLink="/top/all-time" routerLinkActive="active">All time</a></li>
-        </ul>
-        </div>
-    }
-
 }
-

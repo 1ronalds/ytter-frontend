@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.side {
+    width: 550px;
+    background-color: lightblue;
+    height: 100vh;
+}
+
+.main {
+    width: 100%;
+}

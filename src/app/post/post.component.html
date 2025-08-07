@@ -1,5 +1,5 @@
 <div class="topdiv">
-  <h3 class="username">{{name + " (@" + username + ")"}}</h3>
+  <h3 class="username" (click)="openedComment=true">{{post.name + " (@" + post.username + ")"}}</h3>
 
   <div class="menu-container">
     <h3 class="selector" (click)="toggleMenu()">▽</h3>
@@ -11,16 +11,16 @@
   </div>
 </div>
 
-<p>{{text}}</p>
+<p class="post" (click)="openedComment = true">{{post.text}}</p>
 
 <div class="bottomdiv">
-    <img class="likeimg" src="assets/images/like.png" width="30px" height="35px">
-    <span class="likecount">{{likes}}</span>
-    <img class="reyeetimg" src="assets/images/reyeet.png" width="40px">
-    <span class="reyeettext">{{reyeets}}</span>
-    <img class="commentimg" src="assets/images/comment.png" width="50px">
-    <span class="commenttext">{{replies}}</span>
-    <span class="time">{{time}}</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="likeimg" width="25" height="25" viewBox="0 0 48 48"><path fill="#f44336" d="M34 9c-4.2 0-7.9 2.1-10 5.4C21.9 11.1 18.2 9 14 9C7.4 9 2 14.4 2 21c0 11.9 22 24 22 24s22-12 22-24c0-6.6-5.4-12-12-12"/></svg>
+    <span class="likecount">{{post.likes}}</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="reyeetimg" width="25" height="25" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M9 .5L11.5 3L9 5.5"/><path d="M.5 6V4a1 1 0 0 1 1-1h10M5 13.5L2.5 11L5 8.5"/><path d="M13.5 8v2a1 1 0 0 1-1 1h-10"/></g></svg>
+    <span class="reyeettext">{{post.reyeets}}</span>
+    <svg (click)="openedComment=true" xmlns="http://www.w3.org/2000/svg" class="commentimg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 1 0-9-9c0 1.488.36 2.89 1 4.127L3 21l4.873-1c1.236.639 2.64 1 4.127 1" stroke-width="1"/></svg>
+    <span class="commenttext">{{post.replies}}</span>
+    <span class="time">{{post.time}}</span>
 </div>
 
 @if(report){
@@ -29,4 +29,8 @@
 <button class="reportyesbtn" (click)="reportpost()">Yes</button>
 <button class="reportnobtn" (click)="toggleReport()">No</button>
 </div>
+}
+
+@if(openedComment !== false){
+    <app-comment-box [openedPostData]="[post]" (close)="openedComment = false"></app-comment-box>
 }

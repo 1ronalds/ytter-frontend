@@ -1,21 +1,30 @@
 import { Component, Input } from '@angular/core';
+import { CommentBoxComponent } from '../comment-box/comment-box.component';
+
+interface Post {
+  id: number,
+  name: string,
+  username: string,
+  text: string,
+  likes: number,
+  liked: boolean,
+  reyeets: number,
+  reyeeted: boolean,
+  replies: number,
+  time: string
+}
 
 @Component({
   selector: 'app-post',
-  imports: [],
+  imports: [CommentBoxComponent],
   templateUrl: './post.component.html',
   styleUrl: './post.component.css'
 })
 export class PostComponent {
-  @Input() name:string = "";
-  @Input() username:string = "";
-  @Input() text:string = "";
-  @Input() likes:number = 0;
-  @Input() reyeets:number = 0;
-  @Input() replies:number = 0;
-  @Input() time:string = "";
+  @Input() post!:Post;
   openMenu:boolean = false;
   report:boolean = false;
+  openedComment:boolean = false;
 
   toggleReport(){
     this.report = !this.report;

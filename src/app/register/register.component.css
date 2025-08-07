@@ -1,0 +1,35 @@
+.box {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-80%, -50%);
+}
+
+input {
+    margin-top: 20px;
+}
+
+.submitbtn {
+    display: block;
+    margin: 20px auto;
+}
+
+#username {
+    width: 200px;
+}
+
+#name {
+    width: 233px;
+}
+
+#email {
+    width: 235px;
+}
+
+#password {
+    width: 205px;
+}
+
+#password-repeat {
+    width: 148px;
+}

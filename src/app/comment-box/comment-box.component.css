@@ -1,0 +1,172 @@
+.box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background-color: white;
+    border: 1px solid black;
+    z-index: 2;
+}
+
+.backbtn {
+  background-color: white;
+  border: 0px;
+  cursor: pointer;
+  padding-top: 5px;
+}
+
+.contents {
+  overflow: auto;
+  flex: 1;
+}
+
+.main {
+  border: 1px solid black;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  background-color: lightblue;
+  
+}
+
+.userdata {
+  font-weight: bold;
+}
+
+textarea {
+  text-align: left;
+  padding-top: 10px;
+  resize: none;
+  font-size: 20px;
+  width: 780px;
+  height: 150px;
+  padding-right: 5px;
+  margin-left: 5px;
+}
+
+charlen {
+  top: 500px;
+}
+
+.create-post {
+  border: 1px solid black;
+  border-right: 0px;
+  border-left: 0px;
+  padding-top: 5px;
+}
+
+.menu-container {
+  position: relative;
+}
+
+.selector {
+  cursor: pointer;
+  padding-right: 10px;
+  z-index: 2;
+  position: relative;
+}
+
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid black;
+  width: 150px;
+  z-index: 5;
+}
+
+.dropdown p {
+  margin-top: 5px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+
+.dropdown:hover{
+    background-color: gainsboro;
+    cursor: pointer;
+}
+
+.main-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text {
+  margin-top: -10px;
+}
+
+.bottom-div {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.reportbox {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 300px;
+    height: 100px;
+    background-color: lightblue;
+    border: 1px solid black;
+    z-index: 2;
+  }
+
+.reportquestion {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+}
+
+.reportyesbtn {
+    position: absolute;
+    top: 70px;
+    left: 50px;
+    width: 90px;
+}
+
+.reportnobtn {
+    position: absolute;
+    top: 70px;
+    right: 50px;
+    width: 90px;
+}
+
+.likeelement, .reyeetelement, .commentelement {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.create-post-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  align-items: center;
+
+}
+
+.postbtn {
+  width: 60px;
+  height: 30px;
+}
+
+.comment > div:first-of-type {
+  margin-top: 10px;
+}
+
+
+.comment {
+  background-color: lightblue;
+  margin-bottom: 10px;
+}
