@@ -1,9 +1,9 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { PostserviceService } from '../postservice.service';
+import { RequestService } from '../request.service';
 import { FormsModule } from '@angular/forms';
 
 
-interface Post {
+interface Comment {
   id: number,
   name: string,
   username: string,
@@ -16,6 +16,24 @@ interface Post {
   time: string
 }
 
+interface ProfileDataPublic {
+  username: string,
+  name: string
+}
+
+interface Post {
+  postId: number,
+    profileDataPublic: ProfileDataPublic,
+    imageId?: number,
+    replyCount?: number,
+    likeCount?: number,
+    reyeetCount?: number,
+    text: string,
+    timestamp: string,
+    liked?: boolean,
+    reyeeted?: boolean
+}
+
 @Component({
   standalone: true,
   selector: 'app-comment-box',
@@ -24,11 +42,12 @@ interface Post {
   styleUrl: './comment-box.component.css'
 })
 export class CommentBoxComponent {
-  @Input() openedPostData!:Post[];
+  @Input() openedPostData!:Post;
+  openedCommentData!: Comment[];
   @Output() close = new EventEmitter<void>();
-  postService = inject(PostserviceService);
+  requestService = inject(RequestService);
   openedCommentIdList: number[] = [];
-  comments!:Post[];
+  comments!:Comment[];
   openMenu:number = -1;
   myComment:string = "";
   charlen:number = 0;
@@ -36,17 +55,16 @@ export class CommentBoxComponent {
 
   ngOnInit(){
     if(this.openedCommentIdList.length === 0){
-      this.comments = this.postService.getCommentsToPost(this.openedPostData[0].id);
-      console.log(this.comments);
+      this.comments = this.requestService.getCommentsToPost(this.openedPostData.postId);
     } else {
-      this.comments = this.postService.getCommentsToComment(this.openedCommentIdList[this.openedCommentIdList.length-1]);
+      this.comments = this.requestService.getCommentsToComment(this.openedCommentIdList[this.openedCommentIdList.length-1]);
     }
   }
 
   openComment(commentId:number){
     for(const comment of this.comments){
       if(comment.id === commentId){
-        this.openedPostData.push(comment);
+        this.openedCommentData.push(comment);
         break;
       }
     }
@@ -56,7 +74,7 @@ export class CommentBoxComponent {
 
   back(){
     if(this.openedCommentIdList.length > 0){
-      this.openedPostData.pop();
+      this.openedCommentData.pop();
       this.openedCommentIdList.pop();
       this.ngOnInit();
     } else {
@@ -73,7 +91,7 @@ export class CommentBoxComponent {
   }
 
   toggleLikeOpenedPost(){
-    this.openedPostData[this.openedPostData.length-1].liked = !this.openedPostData[this.openedPostData.length-1].liked;
+    console.log("ok");
   }
 
   reportPost(){

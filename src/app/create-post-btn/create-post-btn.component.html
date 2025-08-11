@@ -1,4 +1,6 @@
-<button (click)="showCreatePostBox=true" class='add-post-btn'>+</button>
+@if(globals.loggedIn()){
+    <button (click)="showCreatePostBox=true" class='add-post-btn'>+</button>
+}
 
 @if(showCreatePostBox){
     <app-create-post (close)="showCreatePostBox=false"></app-create-post>

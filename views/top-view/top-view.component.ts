@@ -1,21 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { HeaderComponent } from "../../src/app/header/header.component";
 import { CreatePostBtnComponent } from '../../src/app/create-post-btn/create-post-btn.component';
-import { PostserviceService } from '../../src/app/postservice.service';
+import { RequestService } from '../../src/app/request.service';
 import { PostComponent } from '../../src/app/post/post.component';
-import { CommentBoxComponent } from '../../src/app/comment-box/comment-box.component';
+
+interface ProfileDataPublic {
+  username: string,
+  name: string
+}
 
 interface Post {
-  id: number,
-  name: string,
-  username: string,
-  text: string,
-  likes: number,
-  liked: boolean,
-  reyeets: number,
-  reyeeted: boolean,
-  replies: number,
-  time: string
+  postId: number,
+    profileDataPublic: ProfileDataPublic,
+    imageId?: number,
+    replyCount?: number,
+    likeCount?: number,
+    reyeetCount?: number,
+    text: string,
+    timestamp: string,
+    liked?: boolean,
+    reyeeted?: boolean
 }
 
 @Component({
@@ -25,6 +29,16 @@ interface Post {
   styleUrl: './top-view.component.css'
 })
 export class TopViewComponent {
-  postService = inject(PostserviceService);
-  posts:Post[] = this.postService.getPosts();
+  requestService = inject(RequestService);
+  posts!:Post[];
+
+  ngOnInit(){
+    this.requestService.fetchTopPostsThisWeek().subscribe({
+      next: (data) => {
+        this.posts = data;
+        console.log(data);
+      }
+    })
+  }
+
 }

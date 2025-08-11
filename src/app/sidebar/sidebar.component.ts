@@ -1,19 +1,19 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { GlobalService } from '../global.service';
 import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, RouterLinkActive, RouterModule, LoginComponent],
+  imports: [RouterLink, RouterLinkActive, RouterModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
   globals = inject(GlobalService);
-  displayLogin:boolean = false;
   router = inject(Router);
   count:number = 0;
+  @Output() openLogin = new EventEmitter<void>();
 
   get isHome(): boolean {
     if(this.router.url === '/top' || this.router.url === '/reyeets' ||
@@ -33,6 +33,6 @@ export class SidebarComponent {
     this.globals.loggedIn.set(false);
   }
   toggleDisplayLogin(){
-    this.displayLogin = !this.displayLogin;
+    this.openLogin.emit();
   }
 }

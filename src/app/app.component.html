@@ -1,9 +1,13 @@
 <div class = "container">
-<div class = "side">
-    <app-sidebar></app-sidebar>
+<div class = "left-side">
+    <app-sidebar (openLogin)="openLogin=true"></app-sidebar>
 </div>
 <div class = "main" [style.background-color]="darkMode() ? 'black' : 'white'">
     <router-outlet></router-outlet>                                                                                                                                
-</div>    
-<div class = "side"></div>
 </div>
+<div class = "right-side"></div>
+</div>
+
+@if(openLogin){
+    <app-login (close)="openLogin=false"></app-login>
+}

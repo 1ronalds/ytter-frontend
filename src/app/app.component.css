@@ -1,14 +1,25 @@
-.container {
-    display: flex;
-    flex-direction: row;
+.left-side {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 350px;
+  height: 100vh;
+  background-color: lightblue;
 }
 
-.side {
-    width: 550px;
-    background-color: lightblue;
-    height: 100vh;
+.right-side {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100vh;
+  background-color: lightblue;
 }
 
 .main {
-    width: 100%;
+  padding-left: 400px;
+  padding-right: 400px;
+  min-height: 100vh;
+  background-color: white;
+  overflow-y: auto;
 }

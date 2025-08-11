@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { GlobalService } from '../global.service';
 import { FormsModule } from '@angular/forms';
+import { RequestService } from '../request.service';
 
 @Component({
   standalone: true,
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 export class CreatePostComponent {
   @Output() close = new EventEmitter<void>();
   globals = inject(GlobalService);
+  requestService = inject(RequestService);
   text:string = '';
 
   get charlen(){
@@ -22,4 +24,11 @@ export class CreatePostComponent {
     this.close.emit();
   }
 
+  post(){
+    this.requestService.post({text: this.text}, this.globals.getJwtHeader()).subscribe({
+      next: (data)=> console.log("Post successful"),
+      error: (err)=> console.log("Error", err)
+    })
+    this.close.emit();
+  }
 }

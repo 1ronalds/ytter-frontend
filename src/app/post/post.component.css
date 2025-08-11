@@ -22,6 +22,12 @@
   position: relative;
 }
 
+.option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .menu-container {
   position: relative;
 }
@@ -67,11 +73,13 @@ p {
 .time {
     margin-top: 30px;
     margin-left: auto;
+    margin-right: 15px;
 }
 
 .likeimg {
     margin-top: 33px;
     font-size: 20px;
+    margin-right: 2px;
 }
 
 .likecount {
@@ -84,6 +92,7 @@ p {
 .reyeetimg {
     margin-top: 36px;
     margin-left: 10px;
+    margin-right: 3px;
 }
 
 .reyeettext {
@@ -95,6 +104,7 @@ p {
 .commentimg {
     margin-top: 33px;
     cursor: pointer;
+    margin-right: 3px;
 }
 
 .commenttext {

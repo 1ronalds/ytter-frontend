@@ -3,7 +3,7 @@
     <div class="contents">
         <div class="main">
             <div class="main-top">
-                <p class="userdata">{{openedPostData[0].name + " (@" + openedPostData[0].username +")"}}</p>
+                <p class="userdata">{{openedPostData.profileDataPublic.name + " (@" + openedPostData.profileDataPublic.username +")"}}</p>
                 
                 <div class="menu-container">
                     <h3 class="selector" (click)="toggleMenu(0)">▽</h3>
@@ -14,31 +14,33 @@
                     }
                 </div>
             </div>
-            <p class="text">{{openedPostData[0].text}}</p>
+            <p class="text">{{openedPostData.text}}</p>
             <div class="bottom-div">
                 <div class="likeelement">
-                    @if(openedPostData[openedPostData.length-1].liked){
+                    @if(openedPostData.liked){
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 48 48"><path fill="#f44336" d="M34 9c-4.2 0-7.9 2.1-10 5.4C21.9 11.1 18.2 9 14 9C7.4 9 2 14.4 2 21c0 11.9 22 24 22 24s22-12 22-24c0-6.6-5.4-12-12-12"/></svg>
                     }@else {
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.99 10.99 0 0 0 15 8"/></svg>
                     }
-                    <span class="likecount">{{openedPostData[0].likes}}</span>
+                    <span class="likecount">{{openedPostData.likeCount}}</span>
                 </div>
                 <div class="reyeetelement">
-                    @if(openedPostData.length === 1 && !openedPostData[openedPostData.length-1].reyeeted){
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M9 .5L11.5 3L9 5.5"/><path d="M.5 6V4a1 1 0 0 1 1-1h10M5 13.5L2.5 11L5 8.5"/><path d="M13.5 8v2a1 1 0 0 1-1 1h-10"/></g></svg>
-                        <span class="reyeettext">{{openedPostData[0].reyeets}}</span>
-                    }@else{
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 14 14"><path fill="currentColor" fill-rule="evenodd" d="M9.354.146A.5.5 0 0 0 8.5.5V2h-6A2.5 2.5 0 0 0 0 4.5V6a1 1 0 0 0 2 0V4.5a.5.5 0 0 1 .5-.5h6v1.5a.5.5 0 0 0 .854.354l2.5-2.5a.5.5 0 0 0 0-.708zM5.19 8.038a.5.5 0 0 1 .31.462V10h6a.5.5 0 0 0 .5-.5V8a1 1 0 1 1 2 0v1.5a2.5 2.5 0 0 1-2.5 2.5h-6v1.5a.5.5 0 0 1-.854.354l-2.5-2.5a.5.5 0 0 1 0-.708l2.5-2.5a.5.5 0 0 1 .545-.108" clip-rule="evenodd"/></svg>
-                        <span class="reyeettext">{{openedPostData[0].reyeets}}</span>
+                    @if(openedCommentData.length === 0){
+                        @if(!openedPostData.reyeeted){
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M9 .5L11.5 3L9 5.5"/><path d="M.5 6V4a1 1 0 0 1 1-1h10M5 13.5L2.5 11L5 8.5"/><path d="M13.5 8v2a1 1 0 0 1-1 1h-10"/></g></svg>
+                            <span class="reyeettext">{{openedPostData.reyeetCount}}</span>
+                        }@else{
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 14 14"><path fill="currentColor" fill-rule="evenodd" d="M9.354.146A.5.5 0 0 0 8.5.5V2h-6A2.5 2.5 0 0 0 0 4.5V6a1 1 0 0 0 2 0V4.5a.5.5 0 0 1 .5-.5h6v1.5a.5.5 0 0 0 .854.354l2.5-2.5a.5.5 0 0 0 0-.708zM5.19 8.038a.5.5 0 0 1 .31.462V10h6a.5.5 0 0 0 .5-.5V8a1 1 0 1 1 2 0v1.5a2.5 2.5 0 0 1-2.5 2.5h-6v1.5a.5.5 0 0 1-.854.354l-2.5-2.5a.5.5 0 0 1 0-.708l2.5-2.5a.5.5 0 0 1 .545-.108" clip-rule="evenodd"/></svg>
+                            <span class="reyeettext">{{openedPostData.reyeetCount}}</span>
+                        }
                     }
                 </div>
                 <div class="commentelement">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 1 0-9-9c0 1.488.36 2.89 1 4.127L3 21l4.873-1c1.236.639 2.64 1 4.127 1" stroke-width="1"/></svg>
-                    <span class="commenttext">{{openedPostData[0].replies}}</span>
+                    <span class="commenttext">{{openedPostData.replyCount}}</span>
                 </div>
                 <div>
-                    <span class="time">{{openedPostData[0].time}}</span>
+                    <span class="time">{{openedPostData.timestamp}}</span>
                 </div>
             </div>
         </div>
@@ -47,8 +49,7 @@
 
         <div class="create-post">
         <form>
-        <textarea maxlength="1000" placeholder="your comment" [(ngModel)]="myComment" [ngModelOptions]="{standalone:true}"> 
-        </textarea>
+        <textarea maxlength="1000" placeholder="your comment" [(ngModel)]="myComment" [ngModelOptions]="{standalone:true}"></textarea>
         <div class="create-post-bottom">
             <p class="charlen">{{charlen + " / 1000"}}</p>
             <button class="postbtn">Post</button>

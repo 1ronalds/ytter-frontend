@@ -1,15 +1,15 @@
 <div class="box">
-    <form>
+    <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
         <label for="username">Username: </label>
-        <input id="username"><br>
+        <input id="username" name="username" [(ngModel)]="data.username"><br>
         <label for="name">Name: </label>
-        <input id="name"><br>
+        <input id="name" name="name" [(ngModel)]="data.name"><br>
         <label for="email">Email: </label>
-        <input id="email"><br>
+        <input id="email" name="email" [(ngModel)]="data.email"><br>
         <label for="password">Password: </label>
-        <input type="password" id="password"><br>
+        <input type="password" name="password" id="password" [(ngModel)]="data.password"><br>
         <label for="password-repeat">Password (again): </label>
-        <input type="password" id="password-repeat"><br>
+        <input type="password" id="password-repeat" [ngModelOptions]="{standalone: true}" [(ngModel)]="data.passwordRepeat"><br>
         <input class="submitbtn" type="submit" value="Register">
     </form>
 </div>
