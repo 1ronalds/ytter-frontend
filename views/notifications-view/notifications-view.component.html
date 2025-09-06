@@ -1,2 +1,15 @@
 <app-header></app-header>
-<p>notifications-view works!</p>
+
+@if(notifications){
+    @for(notification of notifications; track notification.description){
+        <hr>
+        <div class="notification">
+            <p>{{notification.description}}</p>
+            <p>{{notification.timestamp | time}}</p>
+            <hr>
+        </div>
+    }
+}
+
+
+<app-create-post-btn></app-create-post-btn>

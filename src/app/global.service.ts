@@ -1,4 +1,4 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { effect, Injectable, signal, WritableSignal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -16,50 +16,32 @@ export class GlobalService {
     this.jwtHeader = signal(localStorage.getItem('JWTtoken') || '');
     this.darkMode = signal(localStorage.getItem('dark-mode') === 'true');
     this.loggedIn = this.jwtHeader() === '' ? signal(false) : signal(true);
-  }
 
-  setJwtHeader(jwt: string) {
-    localStorage.setItem('JWTtoken', jwt);
-    this.jwtHeader.set(jwt);
-    this.loggedIn.set(!!jwt);
+    effect(() => {
+      if(this.loggedIn() === false){
+        this.jwtHeader.set('');
+      }
+    })
+
+    effect(() => {
+      localStorage.setItem('username', this.username());
+    });
+
+    effect(() => {
+      localStorage.setItem('name', this.name());
+    });
+
+    effect(() => {
+      localStorage.setItem('JWTtoken', this.jwtHeader());
+    });
+
+    effect(() => {
+      localStorage.setItem('dark-mode', this.darkMode().toString());
+    });
   }
 
   getJwtHeader() {
     return this.jwtHeader();
   }
 
-  setUsername(username: string) {
-    localStorage.setItem('username', username);
-    this.username.set(username);
-  }
-
-  getUsername() {
-    return this.username();
-  }
-
-  setName(name: string) {
-    localStorage.setItem('name', name);
-    this.name.set(name);
-  }
-
-  getName() {
-    return this.name();
-  }
-
-  setDarkMode(dark: boolean) {
-    localStorage.setItem('dark-mode', dark.toString());
-    this.darkMode.set(dark);
-  }
-
-  getDarkMode() {
-    return this.darkMode();
-  }
-
-  setLoggedIn(status: boolean) {
-    this.loggedIn.set(status);
-  }
-
-  getLoggedIn() {
-    return this.loggedIn();
-  }
 }

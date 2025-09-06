@@ -1,4 +1,5 @@
 <app-header></app-header>
-<p>my-reyeets-view works!</p>
-
+@for(reyeet of reyeets; track reyeet.postId){
+    <app-post [post]="reyeet" (postDeleted)="refresh()"></app-post>
+}
 <app-create-post-btn></app-create-post-btn>

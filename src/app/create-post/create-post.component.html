@@ -1,6 +1,6 @@
 <div class="box">
     <button (click)="closeBoxFunc()" class="close-btn">🗙</button>
-    <h3 class="userspace">{{globals.name + " (@" + globals.username + ")"}}</h3>
+    <h3 class="userspace">{{globals.name() + " (@" + globals.username() + ")"}}</h3>
     <form>
         <textarea maxlength="1000" placeholder="your post" [(ngModel)]="text" [ngModelOptions]="{standalone:true}"> 
         </textarea>

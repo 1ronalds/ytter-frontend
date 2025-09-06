@@ -26,9 +26,11 @@ export class CreatePostComponent {
 
   post(){
     this.requestService.post({text: this.text}, this.globals.getJwtHeader()).subscribe({
-      next: (data)=> console.log("Post successful"),
+      next: (data)=> {
+        console.log("Post successful");
+        this.close.emit();
+      },
       error: (err)=> console.log("Error", err)
     })
-    this.close.emit();
   }
 }

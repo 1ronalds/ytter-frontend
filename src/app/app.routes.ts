@@ -10,6 +10,8 @@ import { MyFollowersViewComponent } from '../../views/my-followers-view/my-follo
 import { NotificationsViewComponent } from '../../views/notifications-view/notifications-view.component';
 import { FindUsersViewComponent } from '../../views/find-users-view/find-users-view.component';
 import { RegisterComponent } from './register/register.component';
+import { UserDataComponent } from './user_profile/user-data/user-data.component';
+import { JustRegisteredComponent } from './just-registered/just-registered.component';
 
 export const routes: Routes = [
     { path: '', component: MainViewComponent, data: {headerType: 'default'} },
@@ -20,9 +22,15 @@ export const routes: Routes = [
     { path: 'profile/ry', component: MyReyeetsViewComponent, data: {headerType: 'profile'} },
     { path: 'profile/following', component: MyFollowingViewComponent, data: {headerType: 'profile'} },
     { path: 'profile/followers', component: MyFollowersViewComponent, data: {headerType: 'profile'} },
-    { path: 'notifications', component: NotificationsViewComponent, data: {headerType: 'notifications'} },
+    { path: 'notifications', component: NotificationsViewComponent, data: {headerType: 'notifications', tab: 'unread'} },
+    { path: 'notifications/all', component: NotificationsViewComponent, data: {headerType: 'notifications', tab: 'all'} },
     { path: 'find', component: FindUsersViewComponent },
+    { path: 'top/this-week', component: TopViewComponent, data: {headerType: 'top', type: 'this-week'} },
     { path: 'top/this-month', component: TopViewComponent, data: {headerType: 'top', type: 'this-month'} },
-    { path: 'top/all-time', component: TopViewComponent, data: {headerType: 'top', type: 'all-time'} },
-    { path: 'register', component: RegisterComponent }
+    { path: 'register', component: RegisterComponent },
+    { path: 'user/:username', component: UserDataComponent, data: {tab: 'posts'} },
+    { path: 'user/:username/ry', component: UserDataComponent, data: {tab: 'ry'} },
+    { path: 'user/:username/following', component: UserDataComponent, data: {tab: 'following'} },
+    { path: 'user/:username/followers', component: UserDataComponent, data: {tab: 'followers'} },
+    { path: 'registered', component: JustRegisteredComponent},
 ];

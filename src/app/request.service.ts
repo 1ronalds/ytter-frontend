@@ -1,26 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-interface PostB {
-  id: number;
-  name: string;
-  username: string;
-  text: string;
-  likes: number;
-  liked: boolean;
-  replies: number;
-  time: string;
-  reyeets?: number;
+interface Notification {
+  description:string,
+  link:string,
+  read:boolean,
+  timestamp:string
 }
 
-interface ProfileDataPublic {
+interface ProfilePublicData {
   username: string,
   name: string
 }
 
 interface Post {
-  postId: number,
-    profileDataPublic: ProfileDataPublic,
+    postId: string,
+    profilePublicData: ProfilePublicData,
     imageId?: number,
     replyCount?: number,
     likeCount?: number,
@@ -28,7 +23,8 @@ interface Post {
     text: string,
     timestamp: string,
     liked?: boolean,
-    reyeeted?: boolean
+    reyeeted?: boolean,
+    reyeetedByName?: string
 }
 
 interface Register {
@@ -47,35 +43,128 @@ interface NewPost {
   text: string
 }
 
+interface NewComment {
+  rootPostId:string,
+  replyToCommentId:string|null,
+  comment:string
+}
+
+interface Comment {
+  commentId: string,
+  profilePublicData: ProfilePublicData;
+  rootPostId: string;
+  replyToCommentId: string;
+  comment: string,
+  likeCount: number,
+  liked: boolean,
+  replyCount: number,
+  timestamp: string
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestService {
-
-  posts = [{id:0, name: 'Ronalds', username: 'ronalds1', text: 'nfewfwifewifjwifjw', likes: 1, liked: false, reyeets: 2, reyeeted: false, replies: 2, time: '1d'},
-           {id:1, name: 'Ronalds', username: 'ronalds1', text: 'nfewfwifewifjwifjw', likes: 1, liked: false, reyeets: 2, reyeeted: false, replies: 0, time: '1d'}
-          ]
-
-  commentsToPost: {[postId:number]: PostB[]} = {0: [
-      {id:3, name: 'Ronalds', username: 'ronalds1', text: 'Reply #1 to post', likes: 1, liked: false, replies: 2, time: '1d'},
-      {id:4, name: 'Ronalds', username: 'ronalds1', text: 'Reply #2 to post', likes: 1, liked: false, replies: 1, time: '1d'},
-  ]}
-
-  commentsToComment: {[commentId:number]: PostB[]} = {
-    3: [
-         {id:6, name: 'Ronalds', username: 'ronalds1', text: 'A', likes: 1, liked: false, reyeets: 2, replies: 0, time: '1d'},
-         {id:7, name: 'Ronalds', username: 'ronalds1', text: 'B', likes: 1, liked: false, reyeets: 2, replies: 0, time: '1d'}
-       ],
-    4: [
-        {id:8, name: 'Ronalds', username: 'ronalds1', text: 'C', likes: 1, liked: false, reyeets: 2, replies: 0, time: '1d'}
-       ]
-  }
-
   constructor(private http: HttpClient) { }
 
-  fetchTopPostsThisWeek(){
-    return this.http.get<Post[]>("http://localhost:3000/api/posts/top/this-week?limit=100&offset=0");
+  getAllNotifications(jwt:string){
+    return this.http.get<Notification[]>('http://localhost:3000/api/notifications/all', {headers:{Authorization:jwt}});
+  }
+
+  getUnreadNotifications(jwt:string){
+    return this.http.get<Notification[]>('http://localhost:3000/api/notifications/unread', {headers:{Authorization:jwt}});
+  }
+
+  getNotificationCount(jwt:string){
+    return this.http.get('http://localhost:3000/api/notifications/unread-count', {responseType: 'text', headers:{Authorization:jwt}});
+  }
+
+  deleteComment(commentId:string, jwt:string){
+    return this.http.delete('http://localhost:3000/api/comment/delete/'+commentId, {headers:{Authorization: jwt}});
+  }
+
+  deletePost(postId:string, jwt:string){
+    return this.http.delete('http://localhost:3000/api/posts/'+postId, {headers:{Authorization: jwt}});
+  }
+
+  fetchReyeetFeed(jwt:string){
+    return this.http.get<Post[]>('http://localhost:3000/api/reyeet-feed?limit=100&offset=0', {headers: {Authorization: jwt}});
+  }
+
+  follow(username:string, jwt:string){
+    return this.http.post('http://localhost:3000/api/profile/'+username+'/follow', null, {headers: {Authorization: jwt}});
+  }
+
+  unfollow(username:string, jwt:string){
+    return this.http.delete('http://localhost:3000/api/profile/'+username+'/follow', {headers: {Authorization: jwt}});
+  }
+
+  getIsFollowing(username:string, jwt:string){
+    return this.http.get('http://localhost:3000/api/profile/'+username+"/amifollowing", {responseType: 'text', headers: { Authorization: jwt}});
+  }
+
+  getName(jwt:string){
+    return this.http.get('http://localhost:3000/api/whatismyname', {responseType: 'text', headers: { Authorization: jwt}});
+  }
+
+  getDoesUserExist(username:string){
+    return this.http.get('http://localhost:3000/api/doesuserexist/'+username, {responseType: 'text'});
+  }
+
+  fetchPostsByUser(username:string, jwt:string|null){
+    let options = {};
+    if(jwt){
+      options = { headers: new HttpHeaders({ Authorization: jwt })};
+    }
+    return this.http.get<Post[]>('http://localhost:3000/api/posts/profile/'+username+'?limit=100&offset=0', options);
+  }
+
+  fetchReyeetsByUser(username:string, jwt:string|null){
+    let options = {};
+    if(jwt){
+      options = { headers: new HttpHeaders({ Authorization: jwt })};
+    }
+    return this.http.get<Post[]>('http://localhost:3000/api/reyeets/'+username+'?limit=100&offset=0', options);
+  }
+
+  fetchFollowersOfUser(username:string){
+    return this.http.get<ProfilePublicData[]>('http://localhost:3000/api/profile/'+username+'/followers');
+  }
+
+  fetchFollowingOfUser(username:string){
+    return this.http.get<ProfilePublicData[]>('http://localhost:3000/api/profile/'+username+'/following');
+  }
+
+  fetchTopPostsThisWeek(jwt: string | null) {
+    let options = {};
+    if(jwt){
+      options = { headers: new HttpHeaders({ Authorization: jwt })};
+    }
+    return this.http.get<Post[]>("http://localhost:3000/api/posts/top/this-week?limit=100&offset=0", options);
+  }
+
+  fetchTopPostsThisMonth(jwt:string|null){
+    let options = {};
+    if(jwt){
+      options = { headers: new HttpHeaders({ Authorization: jwt })};
+    }
+    return this.http.get<Post[]>("http://localhost:3000/api/posts/top/this-month?limit=100&offset=0", options);
+  }
+
+  fetchNewPosts(jwt:string|null){
+    let options = {};
+    if(jwt){
+      options = { headers: new HttpHeaders({ Authorization: jwt })};
+    }
+    return this.http.get<Post[]>("http://localhost:3000/api/posts/new?limit=100&offset=0", options);
+  }
+
+  fetchFollowingFeed(jwt:string){
+    return this.http.get<Post[]>('http://localhost:3000/api/posts/following-feed?limit=100&offset=0', {headers: { Authorization: jwt}});
+  }
+
+  fetchMyPosts(jwt:string){
+    return this.http.get<Post[]>('http://localhost:3000/api/posts/by-me?limit=100&offset=0', {headers: { Authorization: jwt}});
   }
 
   register(data: Register){
@@ -94,20 +183,51 @@ export class RequestService {
     return this.http.post('http://localhost:3000/api/posts/upload', formData, {headers: { Authorization: jwt}});
   }
 
-
-
-  getPosts(){
-    return this.posts;
+  likePost(id:string, jwt:string){
+    return this.http.post('http://localhost:3000/api/post/'+id+'/like', null, {headers: {Authorization: jwt}});
   }
 
-  getCommentsToPost(postId:number){
-    return this.commentsToPost[postId];
+  unlikePost(id:string, jwt:string){
+    return this.http.delete('http://localhost:3000/api/post/'+id+'/like', {headers:{Authorization: jwt}})
   }
 
-  getCommentsToComment(commentId:number){
-    return this.commentsToComment[commentId];
+  likeComment(id:string, jwt:string){
+    return this.http.post('http://localhost:3000/api/comment/'+id+'/like', null, {headers: {Authorization: jwt}});
   }
 
+  unlikeComment(id:string, jwt:string){
+    return this.http.delete('http://localhost:3000/api/comment/'+id+'/like', {headers:{Authorization: jwt}})
+  }
 
+  reyeetPost(id:string, jwt:string){
+    return this.http.post('http://localhost:3000/api/posts/'+id+'/ry', null, {headers: {Authorization: jwt}});
+  }
 
+  unReyeetPost(id:string, jwt:string){
+    return this.http.delete('http://localhost:3000/api/posts/'+id+'/ry', {headers:{Authorization: jwt}});
+  }
+
+  postCommentToPost(data: NewComment, jwt:string){
+    return this.http.post('http://localhost:3000/api/comment/to-post/create', data, {headers:{Authorization:jwt}});
+  }
+
+  postCommentToComment(data:NewComment, jwt:string){
+    return this.http.post('http://localhost:3000/api/comment/to-comment/create', data, {headers:{Authorization:jwt}});
+  }
+
+  getCommentsToPost(postId:string, jwt:string|null){
+    let options = {};
+    if(jwt){
+      options = { headers: new HttpHeaders({ Authorization: jwt })};
+    }
+    return this.http.get<Comment[]>('http://localhost:3000/api/comment/to-post/'+postId, options);
+  }
+
+  getCommentsToComment(commentId:string, jwt:string|null){
+    let options = {};
+    if(jwt){
+      options = { headers: new HttpHeaders({ Authorization: jwt })};
+    }
+    return this.http.get<Comment[]>('http://localhost:3000/api/comment/to-comment/'+commentId, options);
+  }
 }

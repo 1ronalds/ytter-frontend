@@ -5,13 +5,33 @@
     margin: 0 auto;
     margin-bottom: 20px;
     position: relative;
+    border-radius: 5px;
+}
+
+.comment {
+  cursor: pointer;
+}
+
+.topdiv .username {
+  margin-top: 0;
+  padding-top: 0;
+}
+.reyeetedby {
+  font-style: italic;
+  padding-left: 20px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 .username {
-    padding-top: 10px;
+    padding-top: 0px;
     margin-bottom: 5px;
     padding-left: 10px;
     cursor: pointer;
+}
+
+.username:hover {
+  text-decoration: underline;
 }
 
 .topdiv {
@@ -56,10 +76,15 @@ p {
   z-index: 5;
 }
 
+.option-dropdown{
+  display: flex;
+  align-items: center;
+}
 
-.dropdown:hover{
-    background-color: gainsboro;
-    cursor: pointer;
+.option-dropdown:hover{
+
+  background-color: gainsboro;
+  cursor: pointer;
 }
 
 
@@ -112,7 +137,7 @@ p {
     font-size: 20px;
 }
 
-.reportbox {
+.box {
     position: fixed;
     top: 40%;
     left: 50%;
@@ -124,19 +149,19 @@ p {
     z-index: 2;
   }
 
-  .reportquestion {
+  .question {
     position: absolute;
     top: 20px;
   }
 
-  .reportyesbtn {
+  .yesbtn {
     position: absolute;
     top: 70px;
     left: 50px;
     width: 90px;
   }
 
-  .reportnobtn {
+  .nobtn {
     position: absolute;
     top: 70px;
     right: 50px;

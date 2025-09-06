@@ -2,9 +2,9 @@
 
 <ul>
 <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [style.font-weight]="isHome ? 'bold' : 'normal'">Home</a></li>
+<li><a routerLink="/find" routerLinkActive="active">Find users</a></li>
 @if(globals.loggedIn()){
 <li><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
-<li><a routerLink="/find" routerLinkActive="active">Find users</a></li>
 <li><a routerLink="/notifications" routerLinkActive="active">Notifications({{count}})</a></li>
 }
 <li><a (click)="toggleDarkMode()">Dark mode</a></li>

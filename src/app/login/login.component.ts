@@ -27,8 +27,11 @@ export class LoginComponent {
         let authorizationHeader = response.headers.get("Authorization");
         if(authorizationHeader != null){
           this.globals.jwtHeader.set(authorizationHeader);
+          this.globals.username.set(form.value.username);
+          this.requestService.getName(this.globals.getJwtHeader()).subscribe({next: (data) => {this.globals.name.set(data)}});
           this.close.emit();
           this.globals.loggedIn.set(true);
+
         }
 
       } else {

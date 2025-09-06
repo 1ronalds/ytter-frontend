@@ -1,13 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { HeaderComponent } from "../../src/app/header/header.component";
 import { CreatePostBtnComponent } from '../../src/app/create-post-btn/create-post-btn.component';
+import { RequestService } from '../../src/app/request.service';
+import { GlobalService } from '../../src/app/global.service';
+import { PostComponent } from '../../src/app/post/post.component';
+
+interface ProfilePublicData {
+  username: string,
+  name: string
+}
+
+interface Post {
+    postId: string,
+    profilePublicData: ProfilePublicData,
+    imageId?: number,
+    replyCount?: number,
+    likeCount?: number,
+    reyeetCount?: number,
+    text: string,
+    timestamp: string,
+    liked?: boolean,
+    reyeeted?: boolean
+}
 
 @Component({
   selector: 'app-my-posts-view',
-  imports: [HeaderComponent, CreatePostBtnComponent],
+  imports: [HeaderComponent, CreatePostBtnComponent, PostComponent],
   templateUrl: './my-posts-view.component.html',
   styleUrl: './my-posts-view.component.css'
 })
 export class MyPostsViewComponent {
+requestService = inject(RequestService);
+  posts!:Post[];
+  globals = inject(GlobalService);
 
+  ngOnInit(){
+    this.reloadPosts();
+  }
+
+  reloadPosts(){
+    this.requestService.fetchMyPosts(this.globals.getJwtHeader()).subscribe({
+      next: (data) => this.posts = data
+    })
+  }
 }

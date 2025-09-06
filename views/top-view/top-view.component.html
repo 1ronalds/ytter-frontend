@@ -1,5 +1,5 @@
 <app-header></app-header>
 @for(post of posts; track post.postId){
-    <app-post [post]="post" ></app-post>
+    <app-post [post]="post" (postDeleted)="reloadPosts()"></app-post>
 }
-<app-create-post-btn></app-create-post-btn>
+<app-create-post-btn (reloadPosts)="reloadPosts()"></app-create-post-btn>

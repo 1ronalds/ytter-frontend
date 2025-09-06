@@ -1,11 +1,21 @@
+@if(post.reyeetedByName){
+  <p class="reyeetedby">Reyeeted by {{post.reyeetedByName}}</p>
+}
 <div class="topdiv">
-  <h3 class="username" (click)="openedComment=true">{{post.profileDataPublic.name + " (@" + post.profileDataPublic.username + ")"}}</h3>
+  <h3 class="username" (click)="openUserProfile(post.profilePublicData.username)">{{post.profilePublicData.name + " (@" + post.profilePublicData.username + ")"}}</h3>
 
   <div class="menu-container">
     <h3 class="selector" (click)="toggleMenu()">▽</h3>
     @if(openMenu){
       <div class="dropdown">
-        <p (click)="toggleReport()">Report post</p>
+        <div class="option-dropdown" (click)="toggleReport()">
+        <p>Report post</p>
+        </div>
+        @if(post.profilePublicData.username === globals.username()){
+          <div class="option-dropdown" (click)="delete = true">
+          <p>Delete post</p>
+          </div>
+        }
       </div>
     }
   </div>
@@ -30,19 +40,29 @@
     }
         <span class="reyeettext">{{post.reyeetCount ? post.reyeetCount : 0}}</span>
     </div>
-    <svg (click)="openedComment=true" xmlns="http://www.w3.org/2000/svg" class="commentimg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 1 0-9-9c0 1.488.36 2.89 1 4.127L3 21l4.873-1c1.236.639 2.64 1 4.127 1" stroke-width="1"/></svg>
+    <div (click)="openedComment=true" class="comment">
+    <svg xmlns="http://www.w3.org/2000/svg" class="commentimg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 1 0-9-9c0 1.488.36 2.89 1 4.127L3 21l4.873-1c1.236.639 2.64 1 4.127 1" stroke-width="1"/></svg>
     <span class="commenttext">{{post.replyCount ? post.replyCount : 0}}</span>
+    </div>
     <span class="time">{{post.timestamp | time}}</span>
 </div>
 
 @if(report){
-<div class="reportbox">
-<p class="reportquestion">Do you want to report this post?</p>
-<button class="reportyesbtn" (click)="reportpost()">Yes</button>
-<button class="reportnobtn" (click)="toggleReport()">No</button>
+<div class="box">
+<p class="question">Do you want to report this post?</p>
+<button class="yesbtn" (click)="reportpost()">Yes</button>
+<button class="nobtn" (click)="toggleReport()">No</button>
+</div>
+}
+
+@if(delete){
+<div class="box">
+<p class="question">Do you want to delete this post?</p>
+<button class="yesbtn" (click)="deletePost(); delete = false">Yes</button>
+<button class="nobtn" (click)="delete = false">No</button>
 </div>
 }
 
 @if(openedComment !== false){
-    <app-comment-box [openedPostData]="post" (close)="openedComment = false"></app-comment-box>
+    <app-comment-box (refresh)="postDeleted.emit()" [openedPostData]="[post]" (close)="openedComment = false"></app-comment-box>
 }

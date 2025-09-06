@@ -1,3 +1,5 @@
 <app-header></app-header>
-<p>new-view works!</p>
-<app-create-post-btn></app-create-post-btn>
+@for(post of posts; track post.postId){
+    <app-post [post]="post" (postDeleted)="reloadPosts()"></app-post>
+}
+<app-create-post-btn (reloadPosts)="reloadPosts()"></app-create-post-btn>

@@ -8,6 +8,7 @@
     background-color: white;
     border: 1px solid black;
     z-index: 2;
+    overflow: auto;
 }
 
 .backbtn {
@@ -18,7 +19,6 @@
 }
 
 .contents {
-  overflow: auto;
   flex: 1;
 }
 
@@ -51,7 +51,7 @@ textarea {
 }
 
 charlen {
-  top: 600px;
+  top: 500px;
 }
 
 .create-post {
@@ -83,16 +83,20 @@ charlen {
   z-index: 5;
 }
 
-.dropdown p {
-  margin-top: 5px;
-  padding-left: 10px;
-  margin-bottom: 10px;
+.dropdown-p {
+    margin-top: 5px;
+    padding-left: 10px;
+    margin-bottom: 10px;
 }
 
+.dropdown-option{
+  display: flex;
+  align-items: center;
+}
 
-.dropdown:hover{
-    background-color: gainsboro;
-    cursor: pointer;
+.dropdown-option:hover{
+  background-color: gainsboro;
+  cursor: pointer;
 }
 
 .main-top {
@@ -100,7 +104,16 @@ charlen {
   justify-content: space-between;
 }
 
+.userdata {
+  cursor: pointer;
+}
+
+.userdata:hover{
+  text-decoration: underline;
+}
+
 .text {
+  cursor: pointer;
   margin-top: -10px;
 }
 
@@ -110,7 +123,7 @@ charlen {
   padding-bottom: 5px;
 }
 
-.reportbox {
+.qbox {
     position: fixed;
     top: 40%;
     left: 50%;
@@ -122,20 +135,20 @@ charlen {
     z-index: 2;
   }
 
-.reportquestion {
+.question {
     position: absolute;
     top: 20px;
     left: 10px;
 }
 
-.reportyesbtn {
+.yesbtn {
     position: absolute;
     top: 70px;
     left: 50px;
     width: 90px;
 }
 
-.reportnobtn {
+.nobtn {
     position: absolute;
     top: 70px;
     right: 50px;
@@ -146,6 +159,7 @@ charlen {
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 }
 
 .create-post-bottom {
@@ -159,6 +173,14 @@ charlen {
 .postbtn {
   width: 60px;
   height: 30px;
+  background-color: white;
+  font-size: 18px;
+  border: 0px;
+  cursor: pointer;
+}
+
+.postbtn:hover{
+  text-decoration: underline;
 }
 
 .comment > div:first-of-type {
@@ -169,4 +191,8 @@ charlen {
 .comment {
   background-color: lightblue;
   margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
 }

@@ -3,5 +3,5 @@
 }
 
 @if(showCreatePostBox){
-    <app-create-post (close)="showCreatePostBox=false"></app-create-post>
+    <app-create-post (close)="showCreatePostBox=false;reloadPosts.emit()"></app-create-post>
 }

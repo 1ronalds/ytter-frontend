@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserPostsComponent } from '../user-posts/user-posts.component';
 import { UserReyeetsComponent } from '../user-reyeets/user-reyeets.component';
 import { UserFollowersComponent } from '../user-followers/user-followers.component';
@@ -21,6 +21,8 @@ export class UserDataComponent {
   requestService = inject(RequestService);
   globals = inject(GlobalService);
   following?:boolean;
+  router = inject(Router);
+  navigated = false;
 
   constructor(private route: ActivatedRoute) {}
 

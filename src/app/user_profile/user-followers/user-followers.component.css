@@ -1,0 +1,13 @@
+.space {
+    margin-top:50px;
+}
+
+.item {
+    width: max-content;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+.item:hover {
+    font-weight: bold;
+}

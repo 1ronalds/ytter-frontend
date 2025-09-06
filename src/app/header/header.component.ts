@@ -24,7 +24,7 @@ export class HeaderComponent {
     })
 
     if(!this.globals.loggedIn()){
-      if(this.router.url === '/' || this.router.url === '/top/this-month' || this.router.url === '/top/all-time'){
+      if(this.router.url === '/' || this.router.url === '/top/this-week' || this.router.url === '/top/this-month'){
         this.loggedOutTopOrNew = "top";
       } else {
         this.loggedOutTopOrNew = "new";
