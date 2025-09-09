@@ -6,6 +6,9 @@
 @if(globals.loggedIn()){
 <li><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
 <li><a routerLink="/notifications" routerLinkActive="active">Notifications({{count}})</a></li>
+@if(globals.admin()){
+<li><a routerLink="/reported" routerLinkActive="active">Report panel</a></li>
+}
 }
 <li><a (click)="toggleDarkMode()">Dark mode</a></li>
 @if(globals.loggedIn()){

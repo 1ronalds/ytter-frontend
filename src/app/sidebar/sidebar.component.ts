@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { GlobalService } from '../global.service';
 import { RequestService } from '../request.service';
@@ -17,13 +17,15 @@ export class SidebarComponent {
   @Output() openLogin = new EventEmitter<void>();
   requestService = inject(RequestService);
 
-  ngOnInit(){
-    this.loadNotificationCount();
-    setInterval(() => this.loadNotificationCount(), 10000);
+  constructor(){
+    effect(()=>{if(this.globals.loggedIn()){
+      this.loadNotificationCount();
+      setInterval(() => this.loadNotificationCount(), 10000);
+    }});
   }
 
   loadNotificationCount(){
-    this.requestService.getNotificationCount(this.globals.getJwtHeader()).subscribe((data:string) => this.count = Number(data));
+    this.requestService.getNotificationCount(this.globals.getJwtHeader()!).subscribe((data:string) => this.count = Number(data));
   }
 
 
@@ -45,6 +47,7 @@ export class SidebarComponent {
     this.globals.loggedIn.set(false);
     this.globals.name.set("");
     this.globals.username.set("");
+    this.globals.admin.set(false);
     this.router.navigate(['/']);
   }
   toggleDisplayLogin(){

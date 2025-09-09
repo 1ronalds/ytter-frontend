@@ -30,11 +30,11 @@ export class NotificationsViewComponent {
       this.activatedRoute.data.subscribe(data => {
       let view = data["tab"];
       if(view === "unread"){
-        this.requestService.getUnreadNotifications(this.globals.getJwtHeader()).subscribe({next:(data:Notification[]) => {
+        this.requestService.getUnreadNotifications(this.globals.getJwtHeader()!).subscribe({next:(data:Notification[]) => {
           this.notifications = data;
         }});
         } else if(view === "all"){
-        this.requestService.getAllNotifications(this.globals.getJwtHeader()).subscribe({next:(data:Notification[]) => {
+        this.requestService.getAllNotifications(this.globals.getJwtHeader()!).subscribe({next:(data:Notification[]) => {
           this.notifications = data;
         }});
       }

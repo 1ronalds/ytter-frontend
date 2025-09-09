@@ -1,0 +1,20 @@
+@if(reports){
+    @for(report of reports; track report.text){
+        <div>
+        <p [style.color]="globals.darkMode() ? 'white' : 'black'" ><b>Type: </b>{{report.postId === "" ? "comment" : "post"}}</p>
+        <p [style.color]="globals.darkMode() ? 'white' : 'black'" ><b>Text: </b>{{report.text}}</p>
+        <div class="line">
+        @if(report.postId === ""){
+            <p (click)="deleteComment(report.commentId)" class="option">[delete]</p>
+            <p (click)="ignoreCommentReport(report.commentId)"class="option second">[ignore]</p>
+        } @else {
+            <p (click)="deletePost(report.postId)" class="option">[delete]</p>
+            <p (click)="ignorePostReport(report.postId)" class="option second">[ignore]</p>
+        }
+        
+        
+        </div>
+        <hr>
+        </div>
+    }
+}

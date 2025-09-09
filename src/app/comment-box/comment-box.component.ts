@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TimePipe } from '../time.pipe';
 import { GlobalService } from '../global.service';
 import { Router } from '@angular/router';
-
+import {env} from '../environment'
 
 
 interface Comment {
@@ -61,10 +61,13 @@ export class CommentBoxComponent {
   openMenu:number = -1;
   myComment:string = "";
   report:boolean = false;
+  reportPost:boolean = false;
+  reportId?:string;
   router = inject(Router);
   deleteBox:boolean = false;
   deleteMain:boolean|null = null;
   deleteCommentId:string|null = null;
+  server = env.server;
 
   ngOnInit(){
     this.loadComments();
@@ -111,12 +114,16 @@ export class CommentBoxComponent {
     }
   }
 
-  toggleLikeOpenedPost(){
-    console.log("ok");
-  }
+  doReport(){
+    if(this.reportPost){
+      this.reportId && this.requestService.reportPost(this.reportId, this.globalService.getJwtHeader()!).subscribe();
+    } else {
+      this.reportId && this.requestService.reportComment(this.reportId, this.globalService.getJwtHeader()!).subscribe();
+    }
 
-  reportPost(){
-
+    this.reportPost = false;
+    this.reportId = "";
+    
   }
 
   get charlen():number{
@@ -127,14 +134,14 @@ export class CommentBoxComponent {
     if(form.value.comment.length > 0){
       if(this.openedPostData.length === 1){
         let comment:NewComment = {rootPostId:(this.openedPostData[0] as Post).postId, replyToCommentId: null, comment: form.value.comment };
-        this.requestService.postCommentToPost(comment, this.globalService.getJwtHeader()).subscribe({next: (data)=>{
+        this.requestService.postCommentToPost(comment, this.globalService.getJwtHeader()!).subscribe({next: (data)=>{
           this.loadComments();
           (this.openedPostData[0] as Post | undefined)!.replyCount =
                 ((this.openedPostData[0] as Post | undefined)?.replyCount ?? 0) + 1;
       }});
       } else {
         let comment:NewComment = {rootPostId:(this.openedPostData[0] as Post).postId, replyToCommentId:  (this.openedPostData[this.openedPostData.length-1] as Comment).commentId, comment: form.value.comment };
-        this.requestService.postCommentToComment(comment, this.globalService.getJwtHeader()).subscribe({next: (data)=>{
+        this.requestService.postCommentToComment(comment, this.globalService.getJwtHeader()!).subscribe({next: (data)=>{
           this.loadComments();
           (this.openedPostData[0] as Post | undefined)!.replyCount =
                 ((this.openedPostData[0] as Post | undefined)?.replyCount ?? 0) + 1;
@@ -147,7 +154,7 @@ export class CommentBoxComponent {
   likePost(){
     if(this.globalService.loggedIn()){
       if(!this.openedPostData[0].liked){
-        this.requestService.likePost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()).subscribe({next:(data)=>console.log("liked post")});
+        this.requestService.likePost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()!).subscribe({next:(data)=>console.log("liked post")});
         this.openedPostData[0].liked = true;
         if(this.openedPostData[0].likeCount !== undefined){
           this.openedPostData[0].likeCount++;
@@ -155,7 +162,7 @@ export class CommentBoxComponent {
           this.openedPostData[0].likeCount = 1;
         }
       } else {
-        this.requestService.unlikePost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()).subscribe({next:(data)=>console.log("unliked post")});
+        this.requestService.unlikePost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()!).subscribe({next:(data)=>console.log("unliked post")});
         this.openedPostData[0].liked = false;
         if(this.openedPostData[0].likeCount !== undefined){
           this.openedPostData[0].likeCount--;
@@ -176,7 +183,7 @@ export class CommentBoxComponent {
         comment_in_arr++;
       }
       if(!this.comments[comment_in_arr].liked){
-        this.requestService.likeComment((this.comments[comment_in_arr] as Comment).commentId, this.globalService.getJwtHeader()).subscribe({next:(data)=>console.log("liked comment")});
+        this.requestService.likeComment((this.comments[comment_in_arr] as Comment).commentId, this.globalService.getJwtHeader()!).subscribe({next:(data)=>console.log("liked comment")});
         this.comments[comment_in_arr].liked = true;
         if(this.comments[comment_in_arr].likeCount !== undefined){
           this.comments[comment_in_arr].likeCount++;
@@ -184,7 +191,7 @@ export class CommentBoxComponent {
           this.comments[comment_in_arr].likeCount = 1;
         }
       } else {
-        this.requestService.unlikeComment((this.comments[comment_in_arr] as Comment).commentId, this.globalService.getJwtHeader()).subscribe({next:(data)=>console.log("unliked comment")});
+        this.requestService.unlikeComment((this.comments[comment_in_arr] as Comment).commentId, this.globalService.getJwtHeader()!).subscribe({next:(data)=>console.log("unliked comment")});
         this.comments[comment_in_arr].liked = false;
         if(this.comments[comment_in_arr].likeCount !== undefined){
           this.comments[comment_in_arr].likeCount--;
@@ -198,7 +205,7 @@ export class CommentBoxComponent {
   reyeetPost(){
     if(this.globalService.loggedIn()){
       if(!(this.openedPostData[0] as Post).reyeeted){
-        this.requestService.reyeetPost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()).subscribe({next:(data)=>console.log("reyeeted post")});
+        this.requestService.reyeetPost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()!).subscribe({next:(data)=>console.log("reyeeted post")});
         (this.openedPostData[0] as Post).reyeeted = true;
         if((this.openedPostData[0] as Post).reyeetCount !== undefined){
           (this.openedPostData[0] as Post).reyeetCount = (this.openedPostData[0] as Post).reyeetCount! + 1;
@@ -206,7 +213,7 @@ export class CommentBoxComponent {
           (this.openedPostData[0] as Post).reyeetCount = 1;
         }
       } else {
-        this.requestService.unReyeetPost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()).subscribe({next:(data)=>console.log("unreyeeted post")});
+        this.requestService.unReyeetPost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()!).subscribe({next:(data)=>console.log("unreyeeted post")});
         (this.openedPostData[0] as Post).reyeeted = false;
         if((this.openedPostData[0] as Post).reyeetCount !== undefined){
           (this.openedPostData[0] as Post).reyeetCount = (this.openedPostData[0] as Post).reyeetCount! - 1;
@@ -243,7 +250,7 @@ export class CommentBoxComponent {
   delete(){
     if(this.deleteMain === true){
       if(this.openedCommentIdList.length === 0){
-        this.requestService.deletePost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()).subscribe({
+        this.requestService.deletePost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()!).subscribe({
           next:(data)=>{
             this.deleteBox = false;
             this.deleteMain = null;
@@ -254,7 +261,7 @@ export class CommentBoxComponent {
           }
         });
       } else {
-        this.requestService.deleteComment((this.openedPostData[this.openedPostData.length-1] as Comment).commentId, this.globalService.getJwtHeader()).subscribe({
+        this.requestService.deleteComment((this.openedPostData[this.openedPostData.length-1] as Comment).commentId, this.globalService.getJwtHeader()!).subscribe({
           next:(data)=>{
             this.deleteBox = false;
             this.deleteMain = null;
@@ -266,7 +273,7 @@ export class CommentBoxComponent {
       }
 
     } else {
-      this.deleteCommentId !== null ? this.requestService.deleteComment(this.deleteCommentId, this.globalService.getJwtHeader()).subscribe({
+      this.deleteCommentId !== null ? this.requestService.deleteComment(this.deleteCommentId, this.globalService.getJwtHeader()!).subscribe({
         next: (data)=>{
           this.deleteBox = false;
           this.deleteMain = null;
@@ -278,4 +285,18 @@ export class CommentBoxComponent {
       }) : "";
     }
   }
+
+  getOpenedPostImageId(index: number) {
+    const post = this.openedPostData[index] as Post;
+    return post?.imageId || null;
+  }
+
+  getId(post: Post|Comment){
+    if("postId" in post){
+      return (post as Post).postId;
+    } else {
+      return (post as Comment).commentId;
+    }
+  }
+
 }

@@ -1,0 +1,22 @@
+.line {
+    display: flex;
+    flex-direction: vertical;
+    color: #0000EE;
+}
+
+.second {
+    padding-left: 10px;
+}
+
+p {
+    padding:0;
+    margin:0;
+}
+
+.option {
+    cursor: pointer;
+}
+
+.option:hover {
+    text-decoration: underline;
+}

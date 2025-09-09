@@ -31,7 +31,7 @@ export class UserDataComponent {
       this.username = params.get('username')!;
       this.requestService.getDoesUserExist(this.username).subscribe({next: (data:string)=> {data === "false" ? this.userExists = false : this.userExists = true }})
       if(this.globals.loggedIn()){
-        this.requestService.getIsFollowing(this.username, this.globals.getJwtHeader()).subscribe({next: (data:string)=>{data === "true" ? this.following = true : this.following = false}})
+        this.requestService.getIsFollowing(this.username, this.globals.getJwtHeader()!).subscribe({next: (data:string)=>{data === "true" ? this.following = true : this.following = false}})
       }
     })
     this.route.data.subscribe(data => {
@@ -39,13 +39,14 @@ export class UserDataComponent {
     });
   }
 
+
   follow(){
-    this.requestService.follow(this.username, this.globals.getJwtHeader()).subscribe();
+    this.requestService.follow(this.username, this.globals.getJwtHeader()!).subscribe();
     this.following = true;
   }
 
   unfollow(){
-    this.requestService.unfollow(this.username, this.globals.getJwtHeader()).subscribe();
+    this.requestService.unfollow(this.username, this.globals.getJwtHeader()!).subscribe();
     this.following = false;
   }
 }

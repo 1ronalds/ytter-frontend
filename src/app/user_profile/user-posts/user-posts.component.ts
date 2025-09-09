@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
 import { RequestService } from '../../request.service';
 import { PostComponent } from '../../post/post.component';
 import { GlobalService } from '../../global.service';
@@ -33,6 +33,9 @@ export class UserPostsComponent {
   requestService = inject(RequestService);
   globals = inject(GlobalService);
   posts?: Post[];
+  page:number = 1;
+  lastPage:boolean = false;
+  isLoading:boolean = false;
 
   ngOnInit(){
     this.loadPosts();
@@ -43,6 +46,35 @@ export class UserPostsComponent {
   }
   
   loadPosts(){
-    this.requestService.fetchPostsByUser(this.username,this.globals.loggedIn() ? this.globals.getJwtHeader() : null).subscribe({next:(data:Post[])=>{this.posts=data}})
+    this.page = 2;
+    this.requestService.fetchPostsByUser(this.username,this.globals.loggedIn() ? this.globals.getJwtHeader() : null, 1).subscribe({next:(data:Post[])=>{this.posts=data}})
   }
+  
+  loadMorePosts() {
+    if(this.posts && this.posts.length % 20 == 0){
+      this.requestService.fetchPostsByUser(this.username,this.globals.loggedIn() ? this.globals.getJwtHeader() : null, this.page).subscribe({next:(data:Post[])=>{
+        if(this.posts && data.length != 0){
+          this.posts = [...this.posts, ...data];
+        } else {
+          this.lastPage = true;
+        }
+          this.isLoading = false;
+        this.page++;
+      }})
+    }
+  } 
+
+  @ViewChild('load') sentinel!: ElementRef;
+
+  ngAfterViewInit() {
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !this.isLoading && !this.lastPage && this.posts) {
+        this.isLoading = true;
+        this.loadMorePosts();
+      }
+    }, { threshold: 1.0 });
+
+    observer.observe(this.sentinel.nativeElement);
+  }
+
 }

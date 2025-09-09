@@ -52,10 +52,28 @@ textarea:focus {
   border: 2px solid lightblue;
 }
 
-.postbtn {
+.imginfo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   position: absolute;
-  right: 25px;
-  bottom: 9px;
+  bottom: 7px;
+  right: 200px;
+}
+
+.imgdescription {
+  font-size: 18px;
+}
+
+.rmimg {
+  cursor: pointer;
+  color: red;
+}
+
+.imgbtn {
+  position: absolute;
+  right: 80px;
+  bottom: 6px;
   border: none;
   background-color: white;
   font-size: 18px;
@@ -63,6 +81,17 @@ textarea:focus {
   cursor: pointer;
 }
 
-.postbtn:hover {
+.postbtn {
+  position: absolute;
+  right: 25px;
+  bottom: 6px;
+  border: none;
+  background-color: white;
+  font-size: 18px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.postbtn:hover, .imgbtn:hover {
   font-weight: bold;
 }

@@ -2,7 +2,7 @@
     <div class="space"></div>
     <hr>
     @for(follower of followers; track follower.username){
-        <p class="item" (click)="openUser(follower.username)">{{follower.name + " (@" + follower.username + ")"}}</p>
+        <p class="item" [style.color]="globals.darkMode() ? 'white' : 'black'" (click)="openUser(follower.username)">{{follower.name + " (@" + follower.username + ")"}}</p>
         <hr>
     }
 }

@@ -1,5 +1,5 @@
-<div class="box">
-    <button class="backbtn" (click)="back()"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="48" d="M244 400L100 256l144-144M120 256h292"/></svg></button>
+<div class="box" [style.backgroundColor]="globalService.darkMode() ? 'gray' : 'white'">
+    <button [style.backgroundColor]="globalService.darkMode() ? 'gray' : 'white'" class="backbtn" (click)="back()"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="48" d="M244 400L100 256l144-144M120 256h292"/></svg></button>
     <div class="contents">
         <div class="main">
             <div class="main-top">
@@ -9,10 +9,10 @@
                     <h3 class="selector" (click)="toggleMenu(0)">▽</h3>
                     @if(openMenu===0){
                         <div class="dropdown">
-                            <div class="dropdown-option" (click)="report=true">
+                            <div class="dropdown-option" (click)="report=true; reportPost = openedPostData.length == 1 ? true : false; reportId=getId(openedPostData[openedCommentIdList.length])">
                                 <p class="dropdown-p">Report post</p>
                             </div>
-                            @if(openedPostData[openedCommentIdList.length].profilePublicData.username === globalService.username()){
+                            @if(openedPostData[openedCommentIdList.length].profilePublicData.username === globalService.username() || globalService.admin()){
                                 <div class="dropdown-option" (click)="deleteBox=true; deleteMain=true">
                                     <p class="dropdown-p">Delete {{openedCommentIdList.length !== 0 ? "comment" : "post"}}</p>
                                 </div>
@@ -22,7 +22,12 @@
                 </div>
             </div>
             <p class="text">{{getDisplayText(openedPostData[openedCommentIdList.length])}}</p>
-            <div class="bottom-div">
+            @if(getOpenedPostImageId(openedCommentIdList.length)){
+                <div class="img-container">
+                    <img class="img" width="500px" src="{{server}}/api/posts/images/{{getOpenedPostImageId(openedCommentIdList.length)}}">
+                </div>
+            }
+            <div class="bottom-div"><img>
                 <div class="likeelement" (click)="likePost()">
                     @if(openedPostData[openedCommentIdList.length].liked){
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 48 48"><path fill="#f44336" d="M34 9c-4.2 0-7.9 2.1-10 5.4C21.9 11.1 18.2 9 14 9C7.4 9 2 14.4 2 21c0 11.9 22 24 22 24s22-12 22-24c0-6.6-5.4-12-12-12"/></svg>
@@ -61,7 +66,7 @@
                 <textarea maxlength="1000" name="comment" placeholder="Type your comment" [(ngModel)]="myComment"></textarea>
                 <div class="create-post-bottom">
                     <p class="charlen">{{charlen + " / 1000"}}</p>
-                    <input type="submit" class="postbtn" value="Post">
+                    <input [style.backgroundColor]="globalService.darkMode() ? 'gray' : 'white'" type="submit" class="postbtn" value="Post">
                 </div>
             </form>
         </div>
@@ -77,10 +82,10 @@
                         <h3 class="selector" (click)="toggleMenu(+comment.commentId)">▽</h3>
                         @if(openMenu===+comment.commentId){
                             <div class="dropdown">
-                            <div class="dropdown-option" (click)="report=true">
+                            <div class="dropdown-option" (click)="report=true; reportPost = false; reportId = comment.commentId">
                                 <p class="dropdown-p">Report post</p>
                             </div>
-                            @if(comment.profilePublicData.username === globalService.username()){
+                            @if(comment.profilePublicData.username === globalService.username() || globalService.admin()){
                                 <div class="dropdown-option" (click)="deleteBox=true; deleteMain=false; deleteCommentId=comment.commentId">
                                     <p class="dropdown-p">Delete comment</p>
                                 </div>
@@ -114,7 +119,7 @@
 @if(report){
 <div class="qbox">
 <p class="question">Do you want to report this post?</p>
-<button class="yesbtn" (click)="reportPost(); report=false">Yes</button>
+<button class="yesbtn" (click)="doReport(); report=false">Yes</button>
 <button class="nobtn" (click)="report=false">No</button>
 </div>
 }

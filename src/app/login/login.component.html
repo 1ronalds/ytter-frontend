@@ -11,4 +11,7 @@
         </div>
         <button class="submit" type="submit" [disabled]="login.invalid">Login</button>
     </form>
+    @if(error){
+        <p>Invalid username/password or not verified</p>
+    }
 </div>

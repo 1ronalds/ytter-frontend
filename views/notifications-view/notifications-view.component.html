@@ -4,8 +4,8 @@
     @for(notification of notifications; track notification.description){
         <hr>
         <div class="notification">
-            <p>{{notification.description}}</p>
-            <p>{{notification.timestamp | time}}</p>
+            <p [style.color]="globals.darkMode() ? 'white' : 'black'" >{{notification.description}}</p>
+            <p [style.color]="globals.darkMode() ? 'white' : 'black'" >{{notification.timestamp | time}}</p>
             <hr>
         </div>
     }

@@ -12,6 +12,8 @@ import { FindUsersViewComponent } from '../../views/find-users-view/find-users-v
 import { RegisterComponent } from './register/register.component';
 import { UserDataComponent } from './user_profile/user-data/user-data.component';
 import { JustRegisteredComponent } from './just-registered/just-registered.component';
+import { ReportedViewComponent } from './reported-view/reported-view.component';
+import { VerifyComponent } from './verify/verify.component';
 
 export const routes: Routes = [
     { path: '', component: MainViewComponent, data: {headerType: 'default'} },
@@ -33,4 +35,6 @@ export const routes: Routes = [
     { path: 'user/:username/following', component: UserDataComponent, data: {tab: 'following'} },
     { path: 'user/:username/followers', component: UserDataComponent, data: {tab: 'followers'} },
     { path: 'registered', component: JustRegisteredComponent},
+    { path: 'reported', component: ReportedViewComponent},
+    { path: 'verify/:key', component: VerifyComponent }
 ];

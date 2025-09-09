@@ -4,6 +4,7 @@ import { GlobalService } from '../global.service';
 import { TimePipe } from '../time.pipe';
 import { RequestService } from '../request.service';
 import { Router } from '@angular/router';
+import { env } from '../environment'
 
 interface ProfilePublicData {
   username: string,
@@ -40,6 +41,7 @@ export class PostComponent {
   delete:boolean = false;
   openedComment:boolean = false;
   router = inject(Router);
+  server = env.server;
 
   constructor(){
     effect(()=>{
@@ -61,6 +63,7 @@ export class PostComponent {
   }
 
   reportpost(){
+    this.requestService.reportPost(this.post.postId, this.globals.getJwtHeader()!).subscribe();
     this.report = !this.report;
   }
 
@@ -68,7 +71,7 @@ export class PostComponent {
     console.log(this.post.postId);
     if(this.globals.loggedIn()){
       if(!this.post.liked){
-        this.requestService.likePost(this.post.postId, this.globals.getJwtHeader()).subscribe({next:(data)=>console.log("liked post")});
+        this.requestService.likePost(this.post.postId, this.globals.getJwtHeader()!).subscribe({next:(data)=>console.log("liked post")});
         this.post.liked = true;
         if(this.post.likeCount !== undefined){
           this.post.likeCount++;
@@ -76,7 +79,7 @@ export class PostComponent {
           this.post.likeCount = 1;
         }
       } else {
-        this.requestService.unlikePost(this.post.postId, this.globals.getJwtHeader()).subscribe({next:(data)=>console.log("unliked post")});
+        this.requestService.unlikePost(this.post.postId, this.globals.getJwtHeader()!).subscribe({next:(data)=>console.log("unliked post")});
         this.post.liked = false;
         if(this.post.likeCount !== undefined){
           this.post.likeCount--;
@@ -90,7 +93,7 @@ export class PostComponent {
   reyeetPost(){
     if(this.globals.loggedIn()){
       if(!this.post.reyeeted){
-        this.requestService.reyeetPost(this.post.postId, this.globals.getJwtHeader()).subscribe({next:(data)=>console.log("reyeeted post")});;
+        this.requestService.reyeetPost(this.post.postId, this.globals.getJwtHeader()!).subscribe({next:(data)=>console.log("reyeeted post")});;
         this.post.reyeeted = true;
         if(this.post.reyeetCount !== undefined){
           this.post.reyeetCount++;
@@ -98,7 +101,7 @@ export class PostComponent {
           this.post.reyeetCount = 1;
         }
       } else {
-        this.requestService.unReyeetPost(this.post.postId, this.globals.getJwtHeader()).subscribe({next:(data)=>console.log("unreyeeted post")});;
+        this.requestService.unReyeetPost(this.post.postId, this.globals.getJwtHeader()!).subscribe({next:(data)=>console.log("unreyeeted post")});;
         this.post.reyeeted = false;
         if(this.post.reyeetCount !== undefined){
           this.post.reyeetCount--;
@@ -118,8 +121,7 @@ export class PostComponent {
   }
 
   deletePost(){
-    this.requestService.deletePost(this.post.postId, this.globals.getJwtHeader()).subscribe();
-    this.postDeleted.emit();
+    this.requestService.deletePost(this.post.postId, this.globals.getJwtHeader()!).subscribe({next: (data)=>this.postDeleted.emit()});
   }
 
 }

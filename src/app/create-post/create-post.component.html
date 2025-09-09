@@ -4,7 +4,18 @@
     <form>
         <textarea maxlength="1000" placeholder="your post" [(ngModel)]="text" [ngModelOptions]="{standalone:true}"> 
         </textarea>
+        <input type="file" accept=".jpg,.jpeg,.png,.bmp" #fileInput (change)="onFileSelected($event)" hidden>
     </form>
     <p class="charlen">{{charlen + " / 1000"}}</p>
+    @if(image){
+    <div class="imginfo">
+        <span class="imgdescription">Image: {{shorten(image.name)}}</span>
+        <span class="rmimg" (click)="removeImage()">🗙</span>
+  </div>
+    }
+    
     <button class="postbtn" (click)="post()">Post</button>
+    @if(!image){
+        <button (click)="fileInput.click()" class="imgbtn">Add image</button>
+    }
 </div>

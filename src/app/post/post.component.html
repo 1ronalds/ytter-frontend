@@ -11,7 +11,7 @@
         <div class="option-dropdown" (click)="toggleReport()">
         <p>Report post</p>
         </div>
-        @if(post.profilePublicData.username === globals.username()){
+        @if(post.profilePublicData.username === globals.username() || globals.admin()){
           <div class="option-dropdown" (click)="delete = true">
           <p>Delete post</p>
           </div>
@@ -20,8 +20,15 @@
     }
   </div>
 </div>
+<div class="post" (click)="openedComment=true">
+<p>{{post.text}}</p>
+@if(post.imageId){
+  <div class="img-container">
+    <img class="img" width="500px" src="{{server}}/api/posts/images/{{post.imageId}}">
+  </div>
+}
 
-<p class="post" (click)="openedComment = true">{{post.text}}</p>
+</div>
 
 <div class="bottomdiv">
     <div class="option" (click)="likePost()">

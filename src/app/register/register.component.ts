@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RequestService } from '../request.service';
 import { Router } from '@angular/router';
+import { GlobalService } from '../global.service';
 
 @Component({
   standalone: true,
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   router = inject(Router);
+  globals = inject(GlobalService);
   requestService = inject(RequestService);
   data = {
     username: '',

@@ -15,6 +15,7 @@ export class CreatePostComponent {
   globals = inject(GlobalService);
   requestService = inject(RequestService);
   text:string = '';
+  image:File|null = null;
 
   get charlen(){
     return this.text.length;
@@ -25,12 +26,28 @@ export class CreatePostComponent {
   }
 
   post(){
-    this.requestService.post({text: this.text}, this.globals.getJwtHeader()).subscribe({
+    this.requestService.post({text: this.text}, this.image != null ? this.image : null, this.globals.getJwtHeader()!).subscribe({
       next: (data)=> {
-        console.log("Post successful");
         this.close.emit();
       },
       error: (err)=> console.log("Error", err)
     })
   }
+
+  onFileSelected(event: Event){
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if(file){
+      this.image = file;
+    }
+  }
+
+  removeImage(){
+    this.image = null;
+  }
+
+  shorten(text: string) {
+    if (!text) return '';
+    return text.length > 7 ? text.slice(0, 7) + '...' : text;
+  }
+
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { GlobalService } from '../global.service';
 
 @Component({
   selector: 'app-just-registered',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './just-registered.component.css'
 })
 export class JustRegisteredComponent {
-
+  globals = inject(GlobalService);
 }

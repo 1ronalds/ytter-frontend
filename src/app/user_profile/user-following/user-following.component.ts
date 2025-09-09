@@ -27,6 +27,10 @@ export class UserFollowingComponent {
     this.requestService.fetchFollowingOfUser(this.username).subscribe({next:(data:ProfilePublicData[])=>{this.following = data}})
   }
 
+  ngOnChanges(){
+    this.requestService.fetchFollowingOfUser(this.username).subscribe({next:(data:ProfilePublicData[])=>{this.following = data}})
+  }
+
   openUser(username:string){
     this.router.navigate(['/user', username]);
   }

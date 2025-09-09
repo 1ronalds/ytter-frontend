@@ -4,9 +4,15 @@
     left: 50%;
     transform: translate(-50%, -60%);
     width: 350px;
-    height: 200px;
+    height: 220px;
     background-color: white;
     border: 1px solid black;
+  }
+
+  p {
+    color: red;
+    position: absolute;
+    bottom: -10px;
   }
 
 

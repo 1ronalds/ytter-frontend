@@ -1,13 +1,13 @@
 @if (username && tab) {
     <div class="line">
-        <h1>{{ username + '\'s profile' }}</h1>
+        <h1 [style.color]="globals.darkMode() ? 'white' : 'black'" >{{ username + '\'s profile' }}</h1>
         @if(globals.loggedIn()){
             @if(following === true){
-                <p class="following">Following</p>
-                <p class="follow" (click)="unfollow()">Unfollow</p>
+                <p [style.color]="globals.darkMode() ? 'white' : 'black'" class="following">Following</p>
+                <p [style.color]="globals.darkMode() ? 'white' : 'black'" class="follow" (click)="unfollow()">Unfollow</p>
             }
             @else {
-                <p class="follow" (click)="follow()">Follow +</p>
+                <p [style.color]="globals.darkMode() ? 'white' : 'black'" class="follow" (click)="follow()">Follow +</p>
             }            
         }
     </div>
@@ -15,10 +15,10 @@
         <p>This user doesnt exist</p>
     }
     <ul>
-        <li><a [routerLink]="['/user', username]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">User's posts</a></li>
-        <li><a [routerLink]="['/user', username, 'ry']" routerLinkActive="active">User's reyeets</a></li>
-        <li><a [routerLink]="['/user', username, 'following']" routerLinkActive="active">Following</a></li>
-        <li><a [routerLink]="['/user', username, 'followers']" routerLinkActive="active">Followers</a></li>
+        <li><a [style.color]="globals.darkMode() ? 'white' : 'black'" [routerLink]="['/user', username]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">User's posts</a></li>
+        <li><a [style.color]="globals.darkMode() ? 'white' : 'black'" [routerLink]="['/user', username, 'ry']" routerLinkActive="active">User's reyeets</a></li>
+        <li><a [style.color]="globals.darkMode() ? 'white' : 'black'" [routerLink]="['/user', username, 'following']" routerLinkActive="active">Following</a></li>
+        <li><a [style.color]="globals.darkMode() ? 'white' : 'black'" [routerLink]="['/user', username, 'followers']" routerLinkActive="active">Followers</a></li>
     </ul>
 
     @switch(tab){

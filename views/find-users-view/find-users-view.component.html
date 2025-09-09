@@ -1,5 +1,5 @@
 <div class="searchbox">
-    <h2>Find user:</h2>
+    <h2 [style.color]="globals.darkMode() ? 'white' : 'black'" >Find user:</h2>
     <input type="text" [(ngModel)]="username" [ngModelOptions]="{standalone:true}">
     <button (click)="search()">Search</button>
     @if(doesExist === false){
