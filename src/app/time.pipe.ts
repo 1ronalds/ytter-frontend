@@ -15,7 +15,7 @@ export class TimePipe implements PipeTransform {
     } else if(dateJS.getDate() < dateJScurrent.getDate()){
       return(dateJScurrent.getDate() - dateJS.getDate()).toString() + "d";
     } else if(dateJS.getHours() < dateJScurrent.getHours()){
-      return(dateJScurrent.getHours() - dateJS.getHours()).toString() + "d";
+      return(dateJScurrent.getHours() - dateJS.getHours()).toString() + "h";
     } else if(dateJS.getMinutes() < dateJScurrent.getMinutes()){
       return(dateJScurrent.getMinutes() - dateJS.getMinutes()).toString() + "min";
     } else {

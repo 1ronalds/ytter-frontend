@@ -75,6 +75,9 @@ export class CommentBoxComponent {
 
   loadComments(){
     if(this.openedCommentIdList.length === 0){
+      // ja atvērto komentāru ID sarakstā nekā nav, tad atvērts kā galvenais ir posts nevis komentārs un postam ir citādāks API 
+      // requests, nekā komentāram un pēc tā tiek izvēlēts pareizais request veids, kas ielādē vai nu posta komentārus vai komentāra
+      // komentārus.
       this.requestService.getCommentsToPost((this.openedPostData[0] as Post).postId, this.globalService.getJwtHeader()).subscribe({
         next: (data) => this.comments = data
       });
@@ -86,6 +89,9 @@ export class CommentBoxComponent {
   }
 
   openComment(commentId:string){
+    // Atverot komentāru tiek veidots saraksts ar iepriekšējiem atvērtajiem komentāriem, lai ejot atpakaļ tos secīgi varētu ielādēt
+    // atkārtoti. Pievienojot komentāru sarakstam tiek izsaukta funkcija loadComments(), kas veic API requestu uz backendu un saglabā
+    // komentārus pieejamus framework daļai, kas ir atbildīga par attēlošanu.
     for(const comment of this.comments){
       if(comment.commentId === commentId){
         this.openedPostData.push(comment);
@@ -97,6 +103,8 @@ export class CommentBoxComponent {
   }
 
   back(){
+    // Ejot atpakaļ saraksts ar atvērtajiem komentāriem tiek dzēsts no beigām par vienu vienību un tad tiek ielādētas atbildes uz pēdējo
+    // komentāru vai pašu postu. Ja
     if(this.openedCommentIdList.length > 0){
       this.openedPostData.pop();
       this.openedCommentIdList.pop();
